@@ -41,7 +41,7 @@ impl Cognitive {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    print!("Version 2.0");
+    print!("Version 2.0\n");
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
         eprintln!("Usage: {} <path_to_directory>", args[0]);
@@ -63,11 +63,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         if path.is_file() && path.extension().and_then(std::ffi::OsStr::to_str) == Some("pdf") {
             let file_name = path.file_stem().unwrap().to_str().unwrap().to_string();
             print!("We are working following file {} \n", file_name);
-
+            let bytes = std::fs::read(path.clone()).unwrap();
+            let pdf_text = pdf_extract::extract_text_from_mem(&bytes).unwrap();
             let mut unique_name;
             loop {
-                let prompt = format!("actual file name is {}. Give me a meaningful name based on its actual name but limit to 10 characters. Avoid using these names: {:?}.   you just return file name without any additional character or explanation. you response should not be more than 10 character.", file_name, names_used);
-                unique_name = cognitive.answer(prompt).await;
+                let prompt = format!("Following is the content of a pdf file: {}. Give me a meaningful name based on its content but limit to 10 characters. Avoid using these names: {:?}.   you just return file name without any additional character or explanation. you response should not be more than 10 character.", pdf_text, names_used);
+                unique_name = cognitive.answer(prompt).await.to_string();
                 if !names_used.contains(&unique_name) {
                     names_used.insert(unique_name.clone());
                     break;
