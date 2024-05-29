@@ -5,6 +5,8 @@ edition = "2021" # the current version, obeying semver
 authors = ["Hamze Ghalebi <ghalebi@gmail.com>"]
 description = "This script reads a list of PDF files from a specified directory and renames each file based on its content. The renaming logic uses the content of the PDF to generate a more descriptive and meaningful filename."
 license = "MIT"
+readme = "README.md" 
+repository = "https://github.com/RustSandbox/pdfrename"
 
 [dependencies]
 regex = "1"
