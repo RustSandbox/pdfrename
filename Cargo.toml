@@ -1,9 +1,9 @@
 [package]
 name = "pdf-rename"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021" # the current version, obeying semver
 authors = ["Hamze Ghalebi <ghalebi@gmail.com>"]
-description = "Rename PDF files based on their content- I am testing publishing a crate to crates.io so please ignore this crate"
+description = "This script reads a list of PDF files from a specified directory and renames each file based on its content. The renaming logic uses the content of the PDF to generate a more descriptive and meaningful filename."
 license = "MIT"
 
 [dependencies]
